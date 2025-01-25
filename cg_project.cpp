@@ -614,7 +614,7 @@ void Draw()
         glVertex2f(x + 535, y + 360); // .. + circle er center position
     }
     glEnd();
-    // mini circle
+    // mini circle--1
     glColor3f(rgb(92), rgb(141), rgb(148));
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(540, 430); // circle er center position
@@ -623,6 +623,17 @@ void Draw()
         float x = 5 * cosf(angle); // value ta radius
         float y = 5 * sinf(angle);  // value ta radius
         glVertex2f(x + 540, y + 430); // .. + circle er center position
+    }
+    glEnd();
+    // mini circle--2
+    glColor3f(rgb(255), rgb(141), rgb(148));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(530, 410); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 530, y + 410); // .. + circle er center position
     }
     glEnd();
     glBegin(GL_QUADS);
