@@ -824,7 +824,306 @@ void Draw()
     // || drawing airplane                    ||
     // =========================================
 
-        // tail
+    //second Plane
+
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(180, 150);
+    glVertex2i(200, 150);
+    glVertex2i(200, 160);
+    glVertex2i(180, 180);
+    glVertex2i(160, 180);
+    glEnd();
+    // body
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(50), rgb(122), rgb(144));
+    glVertex2i(180, 130);
+    glVertex2i(360, 130);
+    glVertex2i(370, 140);
+    glVertex2i(360, 150);
+    glVertex2i(330, 150);
+    glVertex2i(330, 160);
+    glVertex2i(190, 160);
+    glVertex2i(160, 150);
+    glVertex2i(160, 140);
+    glEnd();
+    // cockepit
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(88), rgb(204), rgb(255));
+    glVertex2i(330, 150);
+    glVertex2i(360, 150);
+    glVertex2i(350, 158);
+    glVertex2i(330, 160);
+    glEnd();
+    // window
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(200, 150);
+    glVertex2f(210, 150);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(220, 150);
+    glVertex2f(230, 150);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(240, 150);
+    glVertex2f(250, 150);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(260, 150);
+    glVertex2f(270, 150);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(280, 150);
+    glVertex2f(290, 150);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(300, 150);
+    glVertex2f(310, 150);
+    glEnd();
+    // wing
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(78), rgb(188), rgb(220));
+    glVertex2i(190, 120);
+    glVertex2i(280, 120);
+    glVertex2i(300, 140);
+    glVertex2i(200, 140);
+    glVertex2i(160, 130);
+    glEnd();
+    // fan
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(210, 110);
+    glVertex2i(230, 110);
+    glVertex2i(230, 130);
+    glVertex2i(210, 130);
+    glVertex2i(200, 120);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(250, 110);
+    glVertex2i(270, 110);
+    glVertex2i(270, 130);
+    glVertex2i(250, 130);
+    glVertex2i(240, 120);
+    glEnd();
+    // wheel 1
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(200, 120);
+    glVertex2f(200, 100);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(200, 100); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 200, y + 100); // .. + circle er center position
+    }
+    glEnd();
+    // wheel 2
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(300, 130);
+    glVertex2f(300, 100);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(300, 100); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 300, y + 100); // .. + circle er center position
+    }
+    glEnd();
+    // wheel 3
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(340, 130);
+    glVertex2f(340, 100);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(340, 100); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 340, y + 100); // .. + circle er center position
+    }
+    glEnd();
+
+    //First Plane
+
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(20, 140);
+    glVertex2i(40, 140);
+    glVertex2i(40, 150);
+    glVertex2i(20, 170);
+    glVertex2i(00, 170);
+    glEnd();
+    // body
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(50), rgb(122), rgb(144));
+    glVertex2i(20, 120);
+    glVertex2i(200, 120);
+    glVertex2i(210, 130);
+    glVertex2i(200, 140);
+    glVertex2i(170, 140);
+    glVertex2i(170, 150);
+    glVertex2i(30, 150);
+    glVertex2i(00, 140);
+    glVertex2i(00, 130);
+    glEnd();
+    // cockepit
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(88), rgb(204), rgb(255));
+    glVertex2i(170, 140);
+    glVertex2i(200, 140);
+    glVertex2i(190, 148);
+    glVertex2i(170, 150);
+    glEnd();
+    // window
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(40, 140);
+    glVertex2f(50, 140);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(60, 140);
+    glVertex2f(70, 140);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(80, 140);
+    glVertex2f(90, 140);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(100, 140);
+    glVertex2f(110, 140);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(120, 140);
+    glVertex2f(130, 140);
+    glEnd();
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex2f(140, 140);
+    glVertex2f(150, 140);
+    glEnd();
+    // wing
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(78), rgb(188), rgb(220));
+    glVertex2i(30, 110);
+    glVertex2i(120, 110);
+    glVertex2i(140, 130);
+    glVertex2i(40, 130);
+    glVertex2i(00, 120);
+    glEnd();
+    // fan
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(50, 100);
+    glVertex2i(70, 100);
+    glVertex2i(70, 120);
+    glVertex2i(50, 120);
+    glVertex2i(40, 110);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glVertex2i(90, 100);
+    glVertex2i(110, 100);
+    glVertex2i(110, 120);
+    glVertex2i(90, 120);
+    glVertex2i(80, 110);
+    glEnd();
+    // wheel 1
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(40, 110);
+    glVertex2f(40, 90);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(40, 90); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 40, y + 90); // .. + circle er center position
+    }
+    glEnd();
+    // wheel 2
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(140, 120);
+    glVertex2f(140, 90);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(140, 90); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 140, y + 90); // .. + circle er center position
+    }
+    glEnd();
+    // wheel 3
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glColor3f(rgb(43), rgb(43), rgb(48));
+    glVertex2f(180, 120);
+    glVertex2f(180, 90);
+    glEnd();
+    // mini circle
+    glColor3f(rgb(236), rgb(154), rgb(32));
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(180, 90); // circle er center position
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 5 * cosf(angle); // value ta radius
+        float y = 5 * sinf(angle);  // value ta radius
+        glVertex2f(x + 180, y + 90); // .. + circle er center position
+    }
+    glEnd();
+
+    //Flying Plane
+    // tail
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
     glVertex2i(r + 20, f + 50);
@@ -837,11 +1136,11 @@ void Draw()
     glBegin(GL_POLYGON);
     glColor3f(rgb(50), rgb(122), rgb(144));
     glVertex2i(r + 20, f + 30);
-    glVertex2i(r + 210, f + 30);
+    glVertex2i(r + 200, f + 30);
     glVertex2i(r + 210, f + 40);
     glVertex2i(r + 200, f + 50);
-    glVertex2i(r + 160, f + 50);
-    glVertex2i(r + 160, f + 60);
+    glVertex2i(r + 170, f + 50);
+    glVertex2i(r + 170, f + 60);
     glVertex2i(r + 30, f + 60);
     glVertex2i(r, f + 50);
     glVertex2i(r, f + 40);
@@ -849,10 +1148,10 @@ void Draw()
     // cockepit
     glBegin(GL_POLYGON);
     glColor3f(rgb(88), rgb(204), rgb(255));
-    glVertex2i(r + 160, f + 50);
-    glVertex2i(r + 180, f + 50);
+    glVertex2i(r + 170, f + 50);
+    glVertex2i(r + 200, f + 50);
+    glVertex2i(r + 190, f + 58);
     glVertex2i(r + 170, f + 60);
-    glVertex2i(r + 160, f + 60);
     glEnd();
     // window
     glLineWidth(5);
