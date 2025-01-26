@@ -533,12 +533,7 @@ void Draw()
     glVertex2i(mp + 60, 430);
     glVertex2i(mp + 40, 430);
     glEnd();
-
-
-
-
-
-
+    
     // =====================================
     // drawing tower
     // =====================================
@@ -548,6 +543,35 @@ void Draw()
     glVertex2f(550, 100);
     glVertex2f(550, 240);
     glVertex2f(520, 240);
+    glEnd();
+
+    glBegin(GL_QUADS);
+    glColor3f(rgb(198), rgb(226), rgb(227));
+    glVertex2f(530, 110);
+    glVertex2f(540, 110);
+    glVertex2f(540, 130);
+    glVertex2f(530, 130);
+    glEnd();
+    glBegin(GL_QUADS);
+    glColor3f(rgb(198), rgb(226), rgb(227));
+    glVertex2f(530, 140);
+    glVertex2f(540, 140);
+    glVertex2f(540, 160);
+    glVertex2f(530, 160);
+    glEnd();
+    glBegin(GL_QUADS);
+    glColor3f(rgb(198), rgb(226), rgb(227));
+    glVertex2f(530, 170);
+    glVertex2f(540, 170);
+    glVertex2f(540, 190);
+    glVertex2f(530, 190);
+    glEnd();
+    glBegin(GL_QUADS);
+    glColor3f(rgb(198), rgb(226), rgb(227));
+    glVertex2f(530, 200);
+    glVertex2f(540, 200);
+    glVertex2f(540, 220);
+    glVertex2f(530, 220);
     glEnd();
 
     glBegin(GL_QUADS);
@@ -561,26 +585,27 @@ void Draw()
     glColor3f(rgb(173), rgb(184), rgb(186));
     glVertex2f(520, 250);
     glVertex2f(550, 250);
-    glVertex2f(570, 290);
-    glVertex2f(500, 290);
+    glVertex2f(590, 280);
+    glVertex2f(480, 280);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(241), rgb(161), rgb(36));
-    glVertex2f(500, 290);
-    glVertex2f(570, 290);
-    glVertex2f(570, 310);
-    glVertex2f(500, 310);
+    glVertex2f(480, 280);
+    glVertex2f(590, 280);
+    glVertex2f(590, 310);
+    glVertex2f(480, 310);
     glEnd();
-    glLineWidth(10);
-    glBegin(GL_LINES);
-    glColor3f(rgb(43), rgb(43), rgb(48));
-    glVertex2f(510, 300);
-    glVertex2f(560, 300);
+    glBegin(GL_QUADS);
+    glColor3f(rgb(198), rgb(226), rgb(227));
+    glVertex2f(490, 285);
+    glVertex2f(580, 285);
+    glVertex2f(580, 305);
+    glVertex2f(490, 305);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(78), rgb(187), rgb(221));
-    glVertex2f(500, 310);
-    glVertex2f(570, 310);
+    glVertex2f(480, 310);
+    glVertex2f(590, 310);
     glVertex2f(550, 320);
     glVertex2f(520, 320);
     glEnd();
@@ -795,6 +820,14 @@ void Draw()
     glVertex2i(v + 20, 140);
     glVertex2i(v + 20, 130);
     glEnd();
+    // car lower body
+    glBegin(GL_POLYGON);
+    glColor3f(rgb(110), rgb(140), rgb(146));
+    glVertex2i(v , 100);
+    glVertex2i(v + 45, 100);
+    glVertex2i(v + 45, 110);
+    glVertex2i(v , 110);
+    glEnd();
     // car wheel 1
     glColor3f(rgb(92), rgb(141), rgb(148));
     glBegin(GL_TRIANGLE_FAN);
@@ -836,7 +869,7 @@ void Draw()
     glEnd();
     // body
     glBegin(GL_POLYGON);
-    glColor3f(rgb(50), rgb(122), rgb(144));
+    glColor3f(rgb(150), rgb(122), rgb(144));
     glVertex2i(180, 130);
     glVertex2i(360, 130);
     glVertex2i(370, 140);
@@ -985,7 +1018,7 @@ void Draw()
     glEnd();
     // body
     glBegin(GL_POLYGON);
-    glColor3f(rgb(50), rgb(122), rgb(144));
+    glColor3f(rgb(55), rgb(55), rgb(55));
     glVertex2i(20, 120);
     glVertex2i(200, 120);
     glVertex2i(210, 130);
