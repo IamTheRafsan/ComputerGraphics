@@ -1,4 +1,4 @@
-
+#include <windows.h>
 #include <GL/glut.h>
 #include <stdio.h>
 #include <GL/gl.h>
@@ -12,14 +12,27 @@ float c2 = 90.0;
 float mp = 830;
 float v = 880;
 
+// Variable to track day/night mode
+bool isNight = false;
+
+// Star blinking timer
+int blinkState = 0;
+
+// Fixed star positions
+const float starPositions[30][2] = {
+    {100, 400}, {150, 450}, {200, 420}, {250, 470}, {300, 430},
+    {350, 480}, {400, 410}, {450, 460}, {500, 420}, {550, 440},
+    {600, 400}, {650, 450}, {700, 420}, {750, 470}, {800, 430},
+    {850, 480}, {900, 410}, {950, 460}, {990, 420}, {970, 440},
+    {110, 370}, {210, 380}, {310, 390}, {410, 400}, {510, 410},
+    {610, 420}, {710, 430}, {810, 440}, {910, 450}, {690, 460}
+};
 void init(void)
 {
-    glClearColor(0.0, 0.0, 0.0, 0.0); //GLfloat red,green,blue,alpha initial value 0 alpha values used by glclear to clear the color buffers
-    glMatrixMode(GL_PROJECTION);  // To specify which matrix is the current matrix & projection applies subsequent matrix to projecton matrix stack
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0.0, 1000.0, 0.0, 500.0, -1.0, 1.0); // Left, Right, Bottom, Top, Near, Far
-    // glOrtho(0.0, 100.0, 0.0, 50.0, -1.0, 1.0); // Left, Right, Bottom, Top, Near, Far
-    //gluOrtho2D(0.0,300.0,0.0,300.0); // Left, Right, Bottom, Top, Near, Far
+    glOrtho(0.0, 1000.0, 0.0, 500.0, -1.0, 1.0);
 }
 void renderBitmapString(float x, float y, void *font, const char *string) {
     glRasterPos2f(x, y);
@@ -34,6 +47,74 @@ float rgb(float rgb)
     return floorf(x * 100) / 100;
 }
 
+void toggleDayNight() {
+    isNight = !isNight;
+    glutPostRedisplay();
+}
+
+void mouseClick(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        toggleDayNight();
+    }
+}
+
+void drawStars() {
+    for (int i = -1; i < 30; i++) {
+        // Blink effect: alternate between bright and dim stars
+        if (blinkState % 2 == 0) {
+            glColor3f(1.0, 1.0, 1.0); // Bright star
+        } else {
+            glColor3f(0.5, 0.5, 0.5); // Dim star
+        }
+        glPointSize(3.0); // Make stars larger
+        glBegin(GL_POINTS);
+        glVertex2f(starPositions[i][0], starPositions[i][1]);
+        glEnd();
+    }
+}
+
+void drawSunOrMoon() {
+    glBegin(GL_TRIANGLE_FAN);
+    if (isNight) {
+        glColor3f(rgb(255), rgb(255), rgb(200)); // Moon color (light yellow)
+    } else {
+        glColor3f(rgb(255), rgb(223), rgb(0)); // Sun color (bright yellow)
+    }
+    glVertex2f(100, 450); // Center of the sun/moon
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 40 * cosf(angle); // Radius 40
+        float y = 40 * sinf(angle);
+        glVertex2f(x + 100, y + 450);
+    }
+    glEnd();
+
+}
+
+void drawTowerAntenna() {
+
+    // Blinking light at the top
+    glBegin(GL_TRIANGLE_FAN);
+    if (blinkState % 2 == 0) {
+        glColor3f(1.0, 0.0, 0.0); // Bright red
+    } else {
+        glColor3f(0.5, 0.0, 0.0); // Dim red
+    }
+    glVertex2f(530, 410); // Center of the light
+    for (int i = 0; i <= 100; i++) {
+        float angle = 2.0f * 3.1416f * i / 100;
+        float x = 3.5 * cosf(angle); // Radius 5
+        float y = 3.5 * sinf(angle);
+        glVertex2f(x + 530, y + 410);
+    }
+    glEnd();
+}
+
+void timer(int value) {
+    blinkState++; // Update blink state
+    glutPostRedisplay(); // Redraw the scene
+    glutTimerFunc(500, timer, 0); // Set next timer event in 500ms
+}
 
 void Draw()
 
@@ -98,14 +179,30 @@ void Draw()
 
     // drawing sky==================================================
     glBegin(GL_QUADS);
-    glColor3f(rgb(228), rgb(247), rgb(254));
-    glVertex2i(0, 100);
-    glVertex2i(1000, 100);
+    if (isNight) {
+        glColor3f(rgb(10), rgb(10), rgb(40)); // Night sky
+        glVertex2f(0, 100);
+        glVertex2f(1000, 100);
 
-    glColor3f(rgb(47), rgb(199), rgb(236));
-    glVertex2i(1000, 500);
-    glVertex2i(0, 500);
+
+        glColor3f(rgb(0), rgb(0), rgb(20));
+        glVertex2f(1000, 500);
+        glVertex2f(0, 500);
+        drawStars();
+    } else {
+        glColor3f(rgb(228), rgb(247), rgb(254)); // Day sky
+        glVertex2f(0, 100);
+        glVertex2f(1000, 100);
+
+        glColor3f(rgb(47), rgb(199), rgb(236));
+        glVertex2f(1000, 500);
+        glVertex2f(0, 500);
+    }
     glEnd();
+
+    // Draw sun or moon in the top-left corner
+    drawSunOrMoon();
+
     // drawing building
     glBegin(GL_QUADS);
     glColor3f(rgb(103), rgb(202), rgb(221));
@@ -390,8 +487,10 @@ void Draw()
     glVertex2f(930, 130);
     glVertex2f(930, 100);
     glEnd();
+
+
     // =========================================
-     // Drawing cloud-----------------------------------------
+    // Drawing cloud-----------------------------------------
 
 
     glColor3f(0.5f, 1.0f, 1.0f);
@@ -533,7 +632,12 @@ void Draw()
     glVertex2i(mp + 60, 430);
     glVertex2i(mp + 40, 430);
     glEnd();
-    
+
+
+
+
+
+
     // =====================================
     // drawing tower
     // =====================================
@@ -650,7 +754,7 @@ void Draw()
         glVertex2f(x + 540, y + 430); // .. + circle er center position
     }
     glEnd();
-    // mini circle--2
+    /*// mini circle--2
     glColor3f(rgb(255), rgb(141), rgb(148));
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(530, 410); // circle er center position
@@ -659,7 +763,9 @@ void Draw()
         float x = 5 * cosf(angle); // value ta radius
         float y = 5 * sinf(angle);  // value ta radius
         glVertex2f(x + 530, y + 410); // .. + circle er center position
-    }
+    }*/
+    drawTowerAntenna();
+
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(173), rgb(184), rgb(186));
@@ -745,51 +851,51 @@ void Draw()
     // ================================
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(70, 100);
-    glVertex2f(90, 100);
-    glVertex2f(90, 110);
-    glVertex2f(70, 110);
+    glVertex2i(70, 100);
+    glVertex2i(90, 100);
+    glVertex2i(90, 110);
+    glVertex2i(70, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(170, 100);
-    glVertex2f(190, 100);
-    glVertex2f(190, 110);
-    glVertex2f(170, 110);
+    glVertex2i(170, 100);
+    glVertex2i(190, 100);
+    glVertex2i(190, 110);
+    glVertex2i(170, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(270, 100);
-    glVertex2f(290, 100);
-    glVertex2f(290, 110);
-    glVertex2f(270, 110);
+    glVertex2i(270, 100);
+    glVertex2i(290, 100);
+    glVertex2i(290, 110);
+    glVertex2i(270, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(370, 100);
-    glVertex2f(390, 100);
-    glVertex2f(390, 110);
-    glVertex2f(370, 110);
+    glVertex2i(370, 100);
+    glVertex2i(390, 100);
+    glVertex2i(390, 110);
+    glVertex2i(370, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(470, 100);
-    glVertex2f(490, 100);
-    glVertex2f(490, 110);
-    glVertex2f(470, 110);
+    glVertex2i(470, 100);
+    glVertex2i(490, 100);
+    glVertex2i(490, 110);
+    glVertex2i(470, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2f(950, 100);
-    glVertex2f(970, 100);
-    glVertex2f(970, 110);
-    glVertex2f(950, 110);
+    glVertex2i(950, 100);
+    glVertex2i(970, 100);
+    glVertex2i(970, 110);
+    glVertex2i(950, 110);
     glEnd();
     // vehicle-----------------------------
     // ====================================
     // driver
     glBegin(GL_POLYGON);
-    glColor3f(rgb(142), rgb(197), rgb(217));
+    glColor3f(rgb(125), rgb(249), rgb(255));
     glVertex2i(v, 110);
     glVertex2i(v + 20, 110);
     glVertex2i(v + 20, 130);
@@ -798,8 +904,8 @@ void Draw()
     glBegin(GL_POLYGON);
     glColor3f(rgb(110), rgb(140), rgb(146));
     glVertex2i(v + 20, 110);
-    glVertex2i(v + 40, 110);
-    glVertex2i(v + 40, 120);
+    glVertex2i(v + 45, 110);
+    glVertex2i(v + 45, 120);
     glVertex2i(v + 20, 120);
     glEnd();
     // driver seat up
@@ -829,7 +935,7 @@ void Draw()
     glVertex2i(v , 110);
     glEnd();
     // car wheel 1
-    glColor3f(rgb(92), rgb(141), rgb(148));
+    glColor3f(rgb(54), rgb(69), rgb(79));
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(v + 10, 100); // circle er center position
     for (int i = 0; i <= 100; i++) {
@@ -840,14 +946,14 @@ void Draw()
     }
     glEnd();
     // car wheel 2
-    glColor3f(rgb(92), rgb(141), rgb(148));
+    glColor3f(rgb(54), rgb(69), rgb(79));
     glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(v + 40, 100); // circle er center position
+    glVertex2f(v + 35, 100); // circle er center position
     for (int i = 0; i <= 100; i++) {
         float angle = 2.0f * 3.1416f * i / 100;
         float x = 5 * cosf(angle); // value ta radius
         float y = 5 * sinf(angle);  // value ta radius
-        glVertex2f(x + v + 40, y + 100); // .. + circle er center position
+        glVertex2f(x + v + 35, y + 100); // .. + circle er center position
     }
     glEnd();
 
@@ -1316,6 +1422,8 @@ int main(int argc, char** argv) {
     glutCreateWindow("Computer Graphics Project");
     init();
     glutDisplayFunc(Draw);
+    glutMouseFunc(mouseClick);
+    glutTimerFunc(500, timer, 0); // Start the blinking timer
     glutMainLoop();
     return 0;
 }
