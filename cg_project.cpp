@@ -20,12 +20,12 @@ int blinkState = 0;
 
 // Fixed star positions
 const float starPositions[30][2] = {
-    {100, 400}, {150, 450}, {200, 420}, {250, 470}, {300, 430},
-    {350, 480}, {400, 410}, {450, 460}, {500, 420}, {550, 440},
-    {600, 400}, {650, 450}, {700, 420}, {750, 470}, {800, 430},
-    {850, 480}, {900, 410}, {950, 460}, {990, 420}, {970, 440},
-    {110, 370}, {210, 380}, {310, 390}, {410, 400}, {510, 410},
-    {610, 420}, {710, 430}, {810, 440}, {910, 450}, {690, 460}
+    {50, 350}, {150, 350}, {250, 350}, {350, 350}, {450, 350},
+    {580, 350}, {650, 350}, {750, 350}, {850, 350}, {950, 350},
+    {100, 400}, {200, 400}, {300, 400}, {400, 400}, {500, 400},
+    {600, 400}, {700, 400}, {800, 400}, {900, 400}, {970, 400},
+    {50, 450}, {175, 450}, {275, 450}, {375, 450}, {475, 450},
+    {575, 450}, {675, 450}, {775, 450}, {875, 450}, {940, 450}
 };
 void init(void)
 {
@@ -60,13 +60,12 @@ void mouseClick(int button, int state, int x, int y) {
 
 void drawStars() {
     for (int i = -1; i < 30; i++) {
-        // Blink effect: alternate between bright and dim stars
         if (blinkState % 2 == 0) {
             glColor3f(1.0, 1.0, 1.0); // Bright star
         } else {
             glColor3f(0.5, 0.5, 0.5); // Dim star
         }
-        glPointSize(3.0); // Make stars larger
+        glPointSize(3.0);
         glBegin(GL_POINTS);
         glVertex2f(starPositions[i][0], starPositions[i][1]);
         glEnd();
@@ -76,11 +75,11 @@ void drawStars() {
 void drawSunOrMoon() {
     glBegin(GL_TRIANGLE_FAN);
     if (isNight) {
-        glColor3f(rgb(255), rgb(255), rgb(200)); // Moon color (light yellow)
+        glColor3f(rgb(255), rgb(255), rgb(200));
     } else {
-        glColor3f(rgb(255), rgb(223), rgb(0)); // Sun color (bright yellow)
+        glColor3f(rgb(255), rgb(223), rgb(0));
     }
-    glVertex2f(100, 450); // Center of the sun/moon
+    glVertex2f(100, 450);
     for (int i = 0; i <= 100; i++) {
         float angle = 2.0f * 3.1416f * i / 100;
         float x = 40 * cosf(angle); // Radius 40
@@ -88,19 +87,16 @@ void drawSunOrMoon() {
         glVertex2f(x + 100, y + 450);
     }
     glEnd();
-
 }
 
 void drawTowerAntenna() {
-
-    // Blinking light at the top
     glBegin(GL_TRIANGLE_FAN);
     if (blinkState % 2 == 0) {
         glColor3f(1.0, 0.0, 0.0); // Bright red
     } else {
         glColor3f(0.5, 0.0, 0.0); // Dim red
     }
-    glVertex2f(530, 410); // Center of the light
+    glVertex2f(530, 410);
     for (int i = 0; i <= 100; i++) {
         float angle = 2.0f * 3.1416f * i / 100;
         float x = 3.5 * cosf(angle); // Radius 5
@@ -111,13 +107,12 @@ void drawTowerAntenna() {
 }
 
 void timer(int value) {
-    blinkState++; // Update blink state
-    glutPostRedisplay(); // Redraw the scene
+    blinkState++;
+    glutPostRedisplay();
     glutTimerFunc(500, timer, 0); // Set next timer event in 500ms
 }
 
 void Draw()
-
 {
     // moving objects-----------------
     if (r <= 1000)
@@ -125,22 +120,14 @@ void Draw()
         r = r + 0.07;
         f = f + t;
         t = t + 0.000003;
-
-        // r = r + 0.5;
-        // f = f + t;
-        // t = t + 0.0001;
-        // p = p + 0.001;
     }
     else {
         r = -200;
         f = 70;
         t = 0.0005;
-
-
     }
     if (c <= 1000)
     {
-        // c = c + 0.1;
         c = c + 0.01;
     }
     else {
@@ -148,7 +135,6 @@ void Draw()
     }
     if (c2 <= 1000)
     {
-        // c2 = c2 + 0.1;
         c2 = c2 + 0.01;
     }
     else {
@@ -156,7 +142,6 @@ void Draw()
     }
     if (mp >= -100)
     {
-        // c2 = c2 + 0.1;
         mp = mp - 0.1;
     }
     else {
@@ -164,26 +149,20 @@ void Draw()
     }
     if (v >= -100)
     {
-        // c2 = c2 + 0.1;
         v = v - 0.02;
     }
     else {
         v = 2000;
     }
-
-
     glutPostRedisplay();
-
     // ===================================
     glClear(GL_COLOR_BUFFER_BIT);
-
     // drawing sky==================================================
     glBegin(GL_QUADS);
     if (isNight) {
         glColor3f(rgb(10), rgb(10), rgb(40)); // Night sky
         glVertex2f(0, 100);
         glVertex2f(1000, 100);
-
 
         glColor3f(rgb(0), rgb(0), rgb(20));
         glVertex2f(1000, 500);
@@ -199,10 +178,8 @@ void Draw()
         glVertex2f(0, 500);
     }
     glEnd();
-
-    // Draw sun or moon in the top-left corner
+    // Draw sun or moon
     drawSunOrMoon();
-
     // drawing building
     glBegin(GL_QUADS);
     glColor3f(rgb(103), rgb(202), rgb(221));
@@ -225,14 +202,12 @@ void Draw()
     glVertex2f(940, 250);
     glVertex2f(620, 270);
     glEnd();
-
     glBegin(GL_POLYGON);
     glColor3f(rgb(175), rgb(182), rgb(184));
     glVertex2f(720, 180);
     glVertex2f(920, 231);
     glVertex2f(620, 251);
     glEnd();
-
     glBegin(GL_QUADS);
     glColor3f(rgb(211), rgb(157), rgb(61));
     glVertex2f(720, 232);
@@ -240,7 +215,6 @@ void Draw()
     glVertex2f(920, 232);
     glVertex2f(720, 244);
     glEnd();
-
     glBegin(GL_QUADS);
     glColor3f(rgb(128), rgb(184), rgb(218));
     glVertex2f(720, 100);
@@ -248,7 +222,6 @@ void Draw()
     glVertex2f(920, 220);
     glVertex2f(720, 232);
     glEnd();
-
     glBegin(GL_QUADS);
     glColor3f(rgb(220), rgb(242), rgb(247));
     glVertex2f(740, 110);
@@ -256,15 +229,14 @@ void Draw()
     glVertex2f(810, 200);
     glVertex2f(740, 200);
     glEnd();
-
     glBegin(GL_QUADS);
     glColor3f(rgb(220), rgb(242), rgb(247));
-    glVertex2i(830, 110);
-    glVertex2i(900, 110);
-    glVertex2i(900, 200);
-    glVertex2i(830, 200);
+    glVertex2f(830, 110);
+    glVertex2f(900, 110);
+    glVertex2f(900, 200);
+    glVertex2f(830, 200);
     glEnd();
-
+        
     // glass window---------------------------------------
     glBegin(GL_QUADS);
     glColor3f(rgb(143), rgb(198), rgb(218));
@@ -428,20 +400,20 @@ void Draw()
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(200), rgb(233), rgb(242));
-    glVertex2i(700, 110);
-    glVertex2i(710, 110);
+    glVertex2f(700, 110);
+    glVertex2f(710, 110);
     glColor3f(rgb(201), rgb(234), rgb(243));
-    glVertex2i(710, 230);
-    glVertex2i(690, 230);
+    glVertex2f(710, 230);
+    glVertex2f(690, 230);
     glEnd();
 
     // ==============mini signbord
     glBegin(GL_QUADS);
     glColor3f(rgb(143), rgb(198), rgb(218));
-    glVertex2i(580, 120);
-    glVertex2i(620, 120);
-    glVertex2i(620, 140);
-    glVertex2i(580, 140);
+    glVertex2f(580, 120);
+    glVertex2f(620, 120);
+    glVertex2f(620, 140);
+    glVertex2f(580, 140);
     glEnd();
     glLineWidth(5);
     glBegin(GL_LINES);
@@ -462,10 +434,10 @@ void Draw()
 
     glBegin(GL_QUADS);
     glColor3f(rgb(238), rgb(154), rgb(32));
-    glVertex2i(630, 140);
-    glVertex2i(640, 140);
-    glVertex2i(640, 170);
-    glVertex2i(630, 170);
+    glVertex2f(630, 140);
+    glVertex2f(640, 140);
+    glVertex2f(640, 170);
+    glVertex2f(630, 170);
     glEnd();
     glLineWidth(5);
     glBegin(GL_LINES);
@@ -476,10 +448,10 @@ void Draw()
 
     glBegin(GL_QUADS);
     glColor3f(rgb(238), rgb(154), rgb(32));
-    glVertex2i(930, 110);
-    glVertex2i(940, 110);
-    glVertex2i(940, 130);
-    glVertex2i(930, 130);
+    glVertex2f(930, 110);
+    glVertex2f(940, 110);
+    glVertex2f(940, 130);
+    glVertex2f(930, 130);
     glEnd();
     glLineWidth(5);
     glBegin(GL_LINES);
@@ -487,12 +459,8 @@ void Draw()
     glVertex2f(930, 130);
     glVertex2f(930, 100);
     glEnd();
-
-
     // =========================================
     // Drawing cloud-----------------------------------------
-
-
     glColor3f(0.5f, 1.0f, 1.0f);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(c, 400);
@@ -503,7 +471,6 @@ void Draw()
         glVertex2f(x + c, y + 400);
     }
     glEnd();
-
 
     glColor3f(0.5f, 1.0f, 1.0f);
     glBegin(GL_TRIANGLE_FAN);
@@ -528,10 +495,10 @@ void Draw()
     glEnd();
     glBegin(GL_POLYGON);
     glColor3f(0.5f, 1.0f, 1.0f);
-    glVertex2i(c, 380);
-    glVertex2i(c + 60, 380);
-    glVertex2i(c + 60, 400);
-    glVertex2i(c, 400);
+    glVertex2f(c, 380);
+    glVertex2f(c + 60, 380);
+    glVertex2f(c + 60, 400);
+    glVertex2f(c, 400);
     glEnd();
 
     // mini cloud-----------------------------------
@@ -592,29 +559,29 @@ void Draw()
     // tail
     glBegin(GL_POLYGON);
     glColor3f(rgb(35), rgb(50), rgb(64));
-    glVertex2i(mp + 70, 440);
-    glVertex2i(mp + 100, 440);
-    glVertex2i(mp + 100, 460);
-    glVertex2i(mp + 90, 450);
-    glVertex2i(mp + 80, 450);
-    glVertex2i(mp + 80, 450);
+    glVertex2f(mp + 70, 440);
+    glVertex2f(mp + 100, 440);
+    glVertex2f(mp + 100, 460);
+    glVertex2f(mp + 90, 450);
+    glVertex2f(mp + 80, 450);
+    glVertex2f(mp + 80, 450);
     glEnd();
     // body
     glBegin(GL_POLYGON);
     glColor3f(rgb(65), rgb(86), rgb(111));
-    glVertex2i(mp, 420);
-    glVertex2i(mp + 80, 420);
-    glVertex2i(mp + 100, 440);
-    glVertex2i(mp + 30, 440);
-    glVertex2i(mp + 30, 430);
-    glVertex2i(mp + 10, 430);
+    glVertex2f(mp, 420);
+    glVertex2f(mp + 80, 420);
+    glVertex2f(mp + 100, 440);
+    glVertex2f(mp + 30, 440);
+    glVertex2f(mp + 30, 430);
+    glVertex2f(mp + 10, 430);
     glEnd();
     // cokepit
     glBegin(GL_POLYGON);
     glColor3f(rgb(166), rgb(214), rgb(252));
-    glVertex2i(mp + 20, 430);
-    glVertex2i(mp + 30, 430);
-    glVertex2i(mp + 30, 440);
+    glVertex2f(mp + 20, 430);
+    glVertex2f(mp + 30, 430);
+    glVertex2f(mp + 30, 440);
     glEnd();
     // backline
     glLineWidth(8);
@@ -626,18 +593,12 @@ void Draw()
     // fan
     glBegin(GL_POLYGON);
     glColor3f(rgb(35), rgb(50), rgb(64));
-    glVertex2i(mp + 40, 410);
-    glVertex2i(mp + 60, 410);
-    glVertex2i(mp + 70, 420);
-    glVertex2i(mp + 60, 430);
-    glVertex2i(mp + 40, 430);
+    glVertex2f(mp + 40, 410);
+    glVertex2f(mp + 60, 410);
+    glVertex2f(mp + 70, 420);
+    glVertex2f(mp + 60, 430);
+    glVertex2f(mp + 40, 430);
     glEnd();
-
-
-
-
-
-
     // =====================================
     // drawing tower
     // =====================================
@@ -754,19 +715,9 @@ void Draw()
         glVertex2f(x + 540, y + 430); // .. + circle er center position
     }
     glEnd();
-    /*// mini circle--2
-    glColor3f(rgb(255), rgb(141), rgb(148));
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(530, 410); // circle er center position
-    for (int i = 0; i <= 100; i++) {
-        float angle = 2.0f * 3.1416f * i / 100;
-        float x = 5 * cosf(angle); // value ta radius
-        float y = 5 * sinf(angle);  // value ta radius
-        glVertex2f(x + 530, y + 410); // .. + circle er center position
-    }*/
+    //Blinking Antenna
     drawTowerAntenna();
-
-    glEnd();
+        
     glBegin(GL_QUADS);
     glColor3f(rgb(173), rgb(184), rgb(186));
     glVertex2f(520, 330);
@@ -851,88 +802,88 @@ void Draw()
     // ================================
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(70, 100);
-    glVertex2i(90, 100);
-    glVertex2i(90, 110);
-    glVertex2i(70, 110);
+    glVertex2f(70, 100);
+    glVertex2f(90, 100);
+    glVertex2f(90, 110);
+    glVertex2f(70, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(170, 100);
-    glVertex2i(190, 100);
-    glVertex2i(190, 110);
-    glVertex2i(170, 110);
+    glVertex2f(170, 100);
+    glVertex2f(190, 100);
+    glVertex2f(190, 110);
+    glVertex2f(170, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(270, 100);
-    glVertex2i(290, 100);
-    glVertex2i(290, 110);
-    glVertex2i(270, 110);
+    glVertex2f(270, 100);
+    glVertex2f(290, 100);
+    glVertex2f(290, 110);
+    glVertex2f(270, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(370, 100);
-    glVertex2i(390, 100);
-    glVertex2i(390, 110);
-    glVertex2i(370, 110);
+    glVertex2f(370, 100);
+    glVertex2f(390, 100);
+    glVertex2f(390, 110);
+    glVertex2f(370, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(470, 100);
-    glVertex2i(490, 100);
-    glVertex2i(490, 110);
-    glVertex2i(470, 110);
+    glVertex2f(470, 100);
+    glVertex2f(490, 100);
+    glVertex2f(490, 110);
+    glVertex2f(470, 110);
     glEnd();
     glBegin(GL_QUADS);
     glColor3f(rgb(255), rgb(236), rgb(39));
-    glVertex2i(950, 100);
-    glVertex2i(970, 100);
-    glVertex2i(970, 110);
-    glVertex2i(950, 110);
+    glVertex2f(950, 100);
+    glVertex2f(970, 100);
+    glVertex2f(970, 110);
+    glVertex2f(950, 110);
     glEnd();
     // vehicle-----------------------------
     // ====================================
     // driver
     glBegin(GL_POLYGON);
     glColor3f(rgb(125), rgb(249), rgb(255));
-    glVertex2i(v, 110);
-    glVertex2i(v + 20, 110);
-    glVertex2i(v + 20, 130);
+    glVertex2f(v, 110);
+    glVertex2f(v + 20, 110);
+    glVertex2f(v + 20, 130);
     glEnd();
     // carback
     glBegin(GL_POLYGON);
     glColor3f(rgb(110), rgb(140), rgb(146));
-    glVertex2i(v + 20, 110);
-    glVertex2i(v + 45, 110);
-    glVertex2i(v + 45, 120);
-    glVertex2i(v + 20, 120);
+    glVertex2f(v + 20, 110);
+    glVertex2f(v + 45, 110);
+    glVertex2f(v + 45, 120);
+    glVertex2f(v + 20, 120);
     glEnd();
     // driver seat up
     glBegin(GL_POLYGON);
     glColor3f(rgb(213), rgb(158), rgb(61));
-    glVertex2i(v, 130);
-    glVertex2i(v + 20, 130);
-    glVertex2i(v + 20, 140);
-    glVertex2i(v, 140);
+    glVertex2f(v, 130);
+    glVertex2f(v + 20, 130);
+    glVertex2f(v + 20, 140);
+    glVertex2f(v, 140);
     glEnd();
     // car stear
     glBegin(GL_POLYGON);
     glColor3f(rgb(213), rgb(158), rgb(61));
-    glVertex2i(v + 50, 110);
-    glVertex2i(v + 60, 110);
-    glVertex2i(v + 60, 120);
-    glVertex2i(v + 50, 120);
-    glVertex2i(v + 20, 140);
-    glVertex2i(v + 20, 130);
+    glVertex2f(v + 50, 110);
+    glVertex2f(v + 60, 110);
+    glVertex2f(v + 60, 120);
+    glVertex2f(v + 50, 120);
+    glVertex2f(v + 20, 140);
+    glVertex2f(v + 20, 130);
     glEnd();
     // car lower body
     glBegin(GL_POLYGON);
     glColor3f(rgb(110), rgb(140), rgb(146));
-    glVertex2i(v , 100);
-    glVertex2i(v + 45, 100);
-    glVertex2i(v + 45, 110);
-    glVertex2i(v , 110);
+    glVertex2f(v , 100);
+    glVertex2f(v + 45, 100);
+    glVertex2f(v + 45, 110);
+    glVertex2f(v , 110);
     glEnd();
     // car wheel 1
     glColor3f(rgb(54), rgb(69), rgb(79));
@@ -967,32 +918,32 @@ void Draw()
 
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(180, 150);
-    glVertex2i(200, 150);
-    glVertex2i(200, 160);
-    glVertex2i(180, 180);
-    glVertex2i(160, 180);
+    glVertex2f(180, 150);
+    glVertex2f(200, 150);
+    glVertex2f(200, 160);
+    glVertex2f(180, 180);
+    glVertex2f(160, 180);
     glEnd();
     // body
     glBegin(GL_POLYGON);
     glColor3f(rgb(150), rgb(122), rgb(144));
-    glVertex2i(180, 130);
-    glVertex2i(360, 130);
-    glVertex2i(370, 140);
-    glVertex2i(360, 150);
-    glVertex2i(330, 150);
-    glVertex2i(330, 160);
-    glVertex2i(190, 160);
-    glVertex2i(160, 150);
-    glVertex2i(160, 140);
+    glVertex2f(180, 130);
+    glVertex2f(360, 130);
+    glVertex2f(370, 140);
+    glVertex2f(360, 150);
+    glVertex2f(330, 150);
+    glVertex2f(330, 160);
+    glVertex2f(190, 160);
+    glVertex2f(160, 150);
+    glVertex2f(160, 140);
     glEnd();
     // cockepit
     glBegin(GL_POLYGON);
     glColor3f(rgb(88), rgb(204), rgb(255));
-    glVertex2i(330, 150);
-    glVertex2i(360, 150);
-    glVertex2i(350, 158);
-    glVertex2i(330, 160);
+    glVertex2f(330, 150);
+    glVertex2f(360, 150);
+    glVertex2f(350, 158);
+    glVertex2f(330, 160);
     glEnd();
     // window
     glLineWidth(5);
@@ -1034,28 +985,28 @@ void Draw()
     // wing
     glBegin(GL_POLYGON);
     glColor3f(rgb(78), rgb(188), rgb(220));
-    glVertex2i(190, 120);
-    glVertex2i(280, 120);
-    glVertex2i(300, 140);
-    glVertex2i(200, 140);
-    glVertex2i(160, 130);
+    glVertex2f(190, 120);
+    glVertex2f(280, 120);
+    glVertex2f(300, 140);
+    glVertex2f(200, 140);
+    glVertex2f(160, 130);
     glEnd();
     // fan
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(210, 110);
-    glVertex2i(230, 110);
-    glVertex2i(230, 130);
-    glVertex2i(210, 130);
-    glVertex2i(200, 120);
+    glVertex2f(210, 110);
+    glVertex2f(230, 110);
+    glVertex2f(230, 130);
+    glVertex2f(210, 130);
+    glVertex2f(200, 120);
     glEnd();
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(250, 110);
-    glVertex2i(270, 110);
-    glVertex2i(270, 130);
-    glVertex2i(250, 130);
-    glVertex2i(240, 120);
+    glVertex2f(250, 110);
+    glVertex2f(270, 110);
+    glVertex2f(270, 130);
+    glVertex2f(250, 130);
+    glVertex2f(240, 120);
     glEnd();
     // wheel 1
     glLineWidth(5);
@@ -1116,32 +1067,32 @@ void Draw()
 
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(20, 140);
-    glVertex2i(40, 140);
-    glVertex2i(40, 150);
-    glVertex2i(20, 170);
-    glVertex2i(00, 170);
+    glVertex2f(20, 140);
+    glVertex2f(40, 140);
+    glVertex2f(40, 150);
+    glVertex2f(20, 170);
+    glVertex2f(00, 170);
     glEnd();
     // body
     glBegin(GL_POLYGON);
     glColor3f(rgb(55), rgb(55), rgb(55));
-    glVertex2i(20, 120);
-    glVertex2i(200, 120);
-    glVertex2i(210, 130);
-    glVertex2i(200, 140);
-    glVertex2i(170, 140);
-    glVertex2i(170, 150);
-    glVertex2i(30, 150);
-    glVertex2i(00, 140);
-    glVertex2i(00, 130);
+    glVertex2f(20, 120);
+    glVertex2f(200, 120);
+    glVertex2f(210, 130);
+    glVertex2f(200, 140);
+    glVertex2f(170, 140);
+    glVertex2f(170, 150);
+    glVertex2f(30, 150);
+    glVertex2f(00, 140);
+    glVertex2f(00, 130);
     glEnd();
     // cockepit
     glBegin(GL_POLYGON);
     glColor3f(rgb(88), rgb(204), rgb(255));
-    glVertex2i(170, 140);
-    glVertex2i(200, 140);
-    glVertex2i(190, 148);
-    glVertex2i(170, 150);
+    glVertex2f(170, 140);
+    glVertex2f(200, 140);
+    glVertex2f(190, 148);
+    glVertex2f(170, 150);
     glEnd();
     // window
     glLineWidth(5);
@@ -1183,28 +1134,28 @@ void Draw()
     // wing
     glBegin(GL_POLYGON);
     glColor3f(rgb(78), rgb(188), rgb(220));
-    glVertex2i(30, 110);
-    glVertex2i(120, 110);
-    glVertex2i(140, 130);
-    glVertex2i(40, 130);
-    glVertex2i(00, 120);
+    glVertex2f(30, 110);
+    glVertex2f(120, 110);
+    glVertex2f(140, 130);
+    glVertex2f(40, 130);
+    glVertex2f(00, 120);
     glEnd();
     // fan
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(50, 100);
-    glVertex2i(70, 100);
-    glVertex2i(70, 120);
-    glVertex2i(50, 120);
-    glVertex2i(40, 110);
+    glVertex2f(50, 100);
+    glVertex2f(70, 100);
+    glVertex2f(70, 120);
+    glVertex2f(50, 120);
+    glVertex2f(40, 110);
     glEnd();
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(90, 100);
-    glVertex2i(110, 100);
-    glVertex2i(110, 120);
-    glVertex2i(90, 120);
-    glVertex2i(80, 110);
+    glVertex2f(90, 100);
+    glVertex2f(110, 100);
+    glVertex2f(110, 120);
+    glVertex2f(90, 120);
+    glVertex2f(80, 110);
     glEnd();
     // wheel 1
     glLineWidth(5);
@@ -1265,32 +1216,32 @@ void Draw()
     // tail
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(r + 20, f + 50);
-    glVertex2i(r + 40, f + 50);
-    glVertex2i(r + 40, f + 60);
-    glVertex2i(r + 20, f + 80);
-    glVertex2i(r + 00, f + 80);
+    glVertex2f(r + 20, f + 50);
+    glVertex2f(r + 40, f + 50);
+    glVertex2f(r + 40, f + 60);
+    glVertex2f(r + 20, f + 80);
+    glVertex2f(r + 00, f + 80);
     glEnd();
     // body
     glBegin(GL_POLYGON);
     glColor3f(rgb(50), rgb(122), rgb(144));
-    glVertex2i(r + 20, f + 30);
-    glVertex2i(r + 200, f + 30);
-    glVertex2i(r + 210, f + 40);
-    glVertex2i(r + 200, f + 50);
-    glVertex2i(r + 170, f + 50);
-    glVertex2i(r + 170, f + 60);
-    glVertex2i(r + 30, f + 60);
-    glVertex2i(r, f + 50);
-    glVertex2i(r, f + 40);
+    glVertex2f(r + 20, f + 30);
+    glVertex2f(r + 200, f + 30);
+    glVertex2f(r + 210, f + 40);
+    glVertex2f(r + 200, f + 50);
+    glVertex2f(r + 170, f + 50);
+    glVertex2f(r + 170, f + 60);
+    glVertex2f(r + 30, f + 60);
+    glVertex2f(r, f + 50);
+    glVertex2f(r, f + 40);
     glEnd();
     // cockepit
     glBegin(GL_POLYGON);
     glColor3f(rgb(88), rgb(204), rgb(255));
-    glVertex2i(r + 170, f + 50);
-    glVertex2i(r + 200, f + 50);
-    glVertex2i(r + 190, f + 58);
-    glVertex2i(r + 170, f + 60);
+    glVertex2f(r + 170, f + 50);
+    glVertex2f(r + 200, f + 50);
+    glVertex2f(r + 190, f + 58);
+    glVertex2f(r + 170, f + 60);
     glEnd();
     // window
     glLineWidth(5);
@@ -1332,28 +1283,28 @@ void Draw()
     // wing
     glBegin(GL_POLYGON);
     glColor3f(rgb(78), rgb(188), rgb(220));
-    glVertex2i(r + 30, f + 20);
-    glVertex2i(r + 120, f + 20);
-    glVertex2i(r + 140, f + 40);
-    glVertex2i(r + 40, f + 40);
-    glVertex2i(r, f + 30);
+    glVertex2f(r + 30, f + 20);
+    glVertex2f(r + 120, f + 20);
+    glVertex2f(r + 140, f + 40);
+    glVertex2f(r + 40, f + 40);
+    glVertex2f(r, f + 30);
     glEnd();
     // fan
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(r + 50, f + 10);
-    glVertex2i(r + 70, f + 10);
-    glVertex2i(r + 70, f + 30);
-    glVertex2i(r + 50, f + 30);
-    glVertex2i(r + 40, f + 20);
+    glVertex2f(r + 50, f + 10);
+    glVertex2f(r + 70, f + 10);
+    glVertex2f(r + 70, f + 30);
+    glVertex2f(r + 50, f + 30);
+    glVertex2f(r + 40, f + 20);
     glEnd();
     glBegin(GL_POLYGON);
     glColor3f(rgb(236), rgb(154), rgb(32));
-    glVertex2i(r + 90, f + 10);
-    glVertex2i(r + 110, f + 10);
-    glVertex2i(r + 110, f + 30);
-    glVertex2i(r + 90, f + 30);
-    glVertex2i(r + 80, f + 20);
+    glVertex2f(r + 90, f + 10);
+    glVertex2f(r + 110, f + 10);
+    glVertex2f(r + 110, f + 30);
+    glVertex2f(r + 90, f + 30);
+    glVertex2f(r + 80, f + 20);
     glEnd();
     // wheel 1
     glLineWidth(5);
